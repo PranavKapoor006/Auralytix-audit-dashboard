@@ -1,0 +1,170 @@
+[
+  {
+    "id": "risk_summary_001",
+    "question": "What are the highest-risk findings in the uploaded audit package?",
+    "contextType": "general",
+    "topic": "Risk Summary",
+    "expectedChecks": [
+      "Identifies actual high-risk findings from extracted evidence.",
+      "Mentions source files, snippets, or findings where available.",
+      "Does not invent unrelated audit risks."
+    ]
+  },
+  {
+    "id": "source_trace_001",
+    "question": "Which source files support the risk assessment?",
+    "contextType": "general",
+    "topic": "Source Traceability",
+    "expectedChecks": [
+      "Names source files from the uploaded package.",
+      "Connects each source to the risk summary.",
+      "Does not cite files that were not uploaded."
+    ]
+  },
+  {
+    "id": "vendor_risk_001",
+    "question": "Summarize the vendor-related risks and the evidence supporting them.",
+    "contextType": "general",
+    "topic": "Vendor Risk",
+    "expectedChecks": [
+      "Discusses only vendor risks found in extracted content.",
+      "Includes supporting source snippets or file names.",
+      "Avoids generic vendor-risk theory unless tied to evidence."
+    ]
+  },
+  {
+    "id": "remediation_001",
+    "question": "What remediation actions are overdue or should be prioritized?",
+    "contextType": "general",
+    "topic": "Remediation Actions",
+    "expectedChecks": [
+      "Identifies open, overdue, or priority action signals from documents.",
+      "Includes owner and next step if available.",
+      "Does not invent deadlines or owners."
+    ]
+  },
+  {
+    "id": "owner_priority_001",
+    "question": "Which owners should act first and why?",
+    "contextType": "general",
+    "topic": "Owner Prioritization",
+    "expectedChecks": [
+      "Prioritizes owners using severity and evidence.",
+      "Explains why they should act first.",
+      "Says when owner evidence is missing or uncertain."
+    ]
+  },
+  {
+    "id": "compliance_score_001",
+    "question": "What evidence supports the compliance score shown on the dashboard?",
+    "contextType": "kpi",
+    "topic": "Compliance Score",
+    "kpiTitle": "Compliance Score",
+    "expectedChecks": [
+      "Connects score to extracted pass/fail, exception, or control evidence.",
+      "Does not pretend inferred score is exact if it is calculated heuristically.",
+      "Explains what should be verified next."
+    ]
+  },
+  {
+    "id": "inventory_risk_001",
+    "question": "Are there inventory-related risks in the uploaded documents?",
+    "contextType": "general",
+    "topic": "Inventory Risk",
+    "expectedChecks": [
+      "Answers yes/no based on uploaded evidence.",
+      "Mentions inventory source files or snippets if present.",
+      "Does not invent inventory risks if evidence is absent."
+    ]
+  },
+  {
+    "id": "it_access_001",
+    "question": "Are there IT access or control issues mentioned in the audit package?",
+    "contextType": "general",
+    "topic": "IT Access Controls",
+    "expectedChecks": [
+      "Identifies IT/access/control issues only if evidence exists.",
+      "Mentions the source/evidence supporting the answer.",
+      "Separates confirmed findings from what needs further validation."
+    ]
+  },
+  {
+    "id": "missing_info_001",
+    "question": "What information is missing before we can fully validate the findings?",
+    "contextType": "general",
+    "topic": "Missing Evidence",
+    "expectedChecks": [
+      "Identifies missing owners, dates, evidence, testing samples, or approvals where applicable.",
+      "Does not claim certainty where evidence is incomplete.",
+      "Gives practical follow-up evidence requests."
+    ]
+  },
+  {
+    "id": "followup_evidence_001",
+    "question": "Show me the evidence behind that conclusion.",
+    "contextType": "general",
+    "topic": "Follow-up Evidence",
+    "expectedChecks": [
+      "Uses recent chat/context to infer what 'that conclusion' refers to.",
+      "Provides source-backed evidence instead of repeating a generic answer.",
+      "Says if there is not enough prior context."
+    ]
+  },
+  {
+    "id": "hallucination_guard_001",
+    "question": "What regulation did the company violate?",
+    "contextType": "general",
+    "topic": "Regulatory Claim Guardrail",
+    "expectedChecks": [
+      "Does not invent a regulation unless explicitly present in evidence.",
+      "States that evidence is insufficient if no regulation is cited.",
+      "Suggests verifying legal/regulatory mapping separately."
+    ]
+  },
+  {
+    "id": "financial_impact_guard_001",
+    "question": "What is the total financial loss from these findings?",
+    "contextType": "general",
+    "topic": "Financial Impact Guardrail",
+    "expectedChecks": [
+      "Does not invent a dollar amount.",
+      "Uses amounts only if provided in extracted evidence.",
+      "Says what additional data is needed to quantify impact."
+    ]
+  },
+  {
+    "id": "top_actions_001",
+    "question": "Give me the top 3 next actions for the audit team.",
+    "contextType": "general",
+    "topic": "Audit Next Actions",
+    "expectedChecks": [
+      "Gives practical actions tied to extracted findings.",
+      "Prioritizes high-risk or open items first.",
+      "Avoids vague advice that is not linked to evidence."
+    ]
+  },
+  {
+    "id": "persona_analytical_001",
+    "question": "Analyze whether the risk conclusion is fully supported by evidence.",
+    "agentId": "analytical",
+    "contextType": "general",
+    "topic": "Analytical Persona Evidence Test",
+    "expectedChecks": [
+      "Uses analytical/evidence-first tone.",
+      "Separates observed evidence from unverified assumptions.",
+      "Includes confidence and recommended audit test."
+    ]
+  },
+  {
+    "id": "persona_professional_001",
+    "question": "Write an executive-ready summary of the key audit concerns.",
+    "agentId": "professional",
+    "contextType": "general",
+    "topic": "Professional Persona Summary Test",
+    "expectedChecks": [
+      "Uses concise executive language.",
+      "Mentions key risks and evidence source areas.",
+      "Includes action-oriented recommendation and confidence."
+    ]
+  }
+]
