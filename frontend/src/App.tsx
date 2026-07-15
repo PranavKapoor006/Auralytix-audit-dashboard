@@ -661,7 +661,7 @@ function describeBrowserSpeechVoice(
   }
 
   return isGoogleBrowserVoice(voice)
-    ? `Google browser voice: ${voice.name}`
+    ? `Browser voice: ${voice.name}`
     : `Browser fallback voice: ${voice.name}`;
 }
 
@@ -722,7 +722,7 @@ const llmModelOptions: LlmModelOption[] = [
   {
     id: "gemini-2.0-flash-lite",
     label: "Gemini 2.0 Flash-Lite",
-    description: "Older lightweight option for fast testing if available.",
+    description: "Older lightweight option for fast responses if available.",
     bestFor: "Legacy light",
   },
   {
@@ -1032,13 +1032,13 @@ function App() {
     setChatOpen(true);
   };
 
-  const handleAgentTest = (agent: Agent) => {
+  const handleAgentChat = (agent: Agent) => {
     setChatAgent(agent);
 
     setChatContext({
       id: Date.now(),
       type: "general",
-      topic: "Agent Personality Test",
+      topic: "Agent Conversation",
     });
 
     setChatOpen(true);
@@ -1144,7 +1144,7 @@ function App() {
         console.warn("Backend extraction failed. Falling back to browser parsing.", backendError);
 
         setUploadError(
-          "Backend extraction was unavailable, so the demo used browser-side parsing as a fallback. Start FastAPI on port 8000 to use extraction.py."
+          "Backend extraction was unavailable, so browser-side parsing was used as a fallback. Start FastAPI on port 8000 to use extraction.py."
         );
 
         parsedFiles = await processZipInBrowser(
@@ -1319,7 +1319,7 @@ function App() {
         <section className="workspace">
           <div className="session-strip">
             <div className="session-status">
-              <span>Current session</span>
+              <span>Active review</span>
               <strong>
                 {selectedAgent
                   ? `${selectedAgent.name} Agent Active`
@@ -1345,7 +1345,7 @@ function App() {
             </div>
 
             <div className="model-switcher-card">
-              <label htmlFor="global-model-select">Gemini model</label>
+              <label htmlFor="global-model-select">AI model</label>
               <select
                 id="global-model-select"
                 value={selectedLlmModel}
@@ -1364,7 +1364,7 @@ function App() {
           {page === "agents" && (
             <AgentSelectionPage
               selectedAgent={selectedAgent}
-              onTestAgent={handleAgentTest}
+              onOpenAgentChat={handleAgentChat}
               onSelectAgent={handleAgentSelect}
             />
           )}
@@ -1420,7 +1420,7 @@ function App() {
         }
       >
         <Bot size={18} />
-        Ask Agent
+        Ask EY Agent
       </button>
 
       {chatOpen && (
@@ -1447,11 +1447,11 @@ function App() {
 
 function AgentSelectionPage({
   selectedAgent,
-  onTestAgent,
+  onOpenAgentChat,
   onSelectAgent,
 }: {
   selectedAgent: Agent | null;
-  onTestAgent: (agent: Agent) => void;
+  onOpenAgentChat: (agent: Agent) => void;
   onSelectAgent: (agent: Agent) => void;
 }) {
   return (
@@ -1466,25 +1466,25 @@ function AgentSelectionPage({
           <h2>Choose your audit agent.</h2>
 
           <p>
-            Pick a personality for the session. The selected agent will guide
-            dashboard insights, detailed findings, and follow-up conversations.
+            Pick a personality. The selected agent will guide dashboard insights,
+            detailed findings, and follow-up conversations.
           </p>
         </div>
 
         <div className="hero-stats">
           <div>
             <strong>4</strong>
-            <span>Required agents</span>
+            <span>Audit agents</span>
           </div>
 
           <div>
             <strong>Voice</strong>
-            <span>TTS-ready design</span>
+            <span>Voice powered by TTS</span>
           </div>
 
           <div>
             <strong>Chat</strong>
-            <span>Clickable insights</span>
+            <span>Chat insights</span>
           </div>
         </div>
       </section>
@@ -1522,7 +1522,6 @@ function AgentSelectionPage({
             </div>
 
             <div className="sample-response">
-              <strong>Sample response</strong>
               <p>{agent.toneExample}</p>
             </div>
 
@@ -1530,9 +1529,9 @@ function AgentSelectionPage({
               <button
                 type="button"
                 className="secondary-btn"
-                onClick={() => onTestAgent(agent)}
+                onClick={() => onOpenAgentChat(agent)}
               >
-                Test Chat
+                Chat
               </button>
 
               <button
@@ -1579,8 +1578,8 @@ function UploadPage({
           <span className="eyebrow">Phase 2</span>
           <h2>Upload audit documents.</h2>
           <p>
-            Upload one ZIP file containing PDFs, Word files, spreadsheets, CSVs,
-            or text files. The app extracts actual content from the files.
+            Upload one ZIP file containing PDF, Word files, spreadsheets, CSVs,
+            or text files to extract actual contents from the files.
           </p>
         </div>
       </section>
@@ -1799,7 +1798,7 @@ function DashboardPage({
     {
       label: "Agent workflow",
       value: "Ready",
-      detail: "click any card for evidence chat",
+      detail: "select any card for evidence chat",
     },
   ];
 
@@ -1819,10 +1818,10 @@ function DashboardPage({
     Math.round((analysis.pendingActionItems / Math.max(1, analysis.totalFindings)) * 100),
   );
 
-  const exportDemoBrief = () => {
-    const brief = buildAuralytixDemoBrief(analysis, extractionRunSummary);
+  const exportReviewBrief = () => {
+    const brief = buildAuralytixReviewBrief(analysis, extractionRunSummary);
     downloadTextFile(
-      `auralytix-demo-brief-${new Date().toISOString().slice(0, 10)}.txt`,
+      `auralytix-review-brief-${new Date().toISOString().slice(0, 10)}.txt`,
       brief,
     );
   };
@@ -1836,7 +1835,7 @@ function DashboardPage({
           <p>
             Evidence-backed audit intelligence generated from uploaded reports,
             statements, checklists, vendor records, inventory logs, and remediation
-            trackers. Click any card to open a Gemini-powered audit explanation.
+            trackers. Select any card to open an AI-powered audit explanation.
           </p>
 
           <div className="dashboard-command-actions">
@@ -1849,14 +1848,14 @@ function DashboardPage({
                 })
               }
             >
-              Ask Agent
+              Ask EY Agent
               <Sparkles size={17} />
             </button>
 
             <button
               type="button"
-              className="secondary-btn demo-brief-btn"
-              onClick={exportDemoBrief}
+              className="secondary-btn review-brief-btn"
+              onClick={exportReviewBrief}
             >
               Export review brief
               <FileText size={16} />
@@ -1967,15 +1966,15 @@ function DashboardPage({
         ))}
       </section>
 
-      <section className="dashboard-visual-section" aria-label="Clickable dashboard visual insights">
+      <section className="dashboard-visual-section" aria-label="Dashboard visual insights">
         <div className="visual-section-header">
           <div>
             <span className="eyebrow">Visual Insights</span>
-            <h3>Clickable audit analytics</h3>
+            <h3>Audit analytics</h3>
           </div>
           <p>
             These charts summarize the same uploaded evidence behind the KPI cards.
-            Click any visual to ask the selected agent for a focused explanation.
+            Select any visual to ask the selected agent for a focused explanation.
           </p>
         </div>
 
@@ -2014,7 +2013,7 @@ function DashboardPage({
             </div>
           </button>
 
-          <article className="dashboard-visual-card owner-visual-card">
+          <div className="dashboard-visual-card owner-visual-card">
             <div className="visual-card-title-row">
               <BarChart3 size={22} />
               <div>
@@ -2241,7 +2240,7 @@ function DashboardPage({
             <span className="eyebrow">Source Evidence</span>
             <h3>Files used for this dashboard</h3>
           </div>
-          <p>Click a source file to ask the audit agent what it contributed.</p>
+          <p>Select a source file to ask the audit agent what it contributed.</p>
         </div>
 
         <div className="evidence-source-grid">
@@ -2494,14 +2493,14 @@ function DetailedInsightsPage({
             })
           }
         >
-          Ask Agent
+          Ask EY Agent
         </button>
       </section>
 
       <section className="findings-summary-panel">
         <div className="findings-summary-copy">
           <span className="eyebrow">Findings register summary</span>
-          <h3>Summary instead of full table</h3>
+          <h3>Summary</h3>
           <p>{detailSummary}</p>
 
           <div className="details-action-row">
@@ -2718,7 +2717,7 @@ function FindingsRegisterPage({
                 {row.risk}
               </span>
               <span>{row.owner}</span>
-              <span className="ask-link">Ask Agent</span>
+              <span className="ask-link">Ask EY Agent</span>
             </button>
           ))
         )}
@@ -2777,7 +2776,7 @@ function ChatPanel({
     },
     {
       sender: "agent",
-      text: "Connecting to the selected Gemini model and preparing a focused response...",
+      text: "Connecting to the selected AI model and preparing a focused response...",
     },
   ]);
 
@@ -2787,7 +2786,7 @@ function ChatPanel({
   const [backendStatus, setBackendStatus] = useState<
     "checking" | "connected" | "fallback"
   >("checking");
-  const [backendLabel, setBackendLabel] = useState("Checking selected Gemini model");
+  const [backendLabel, setBackendLabel] = useState("Checking selected AI model");
   const [ttsSupported, setTtsSupported] = useState(true);
   const [voiceInputSupported, setVoiceInputSupported] = useState(true);
   const [availableSpeechVoices, setAvailableSpeechVoices] = useState<SpeechSynthesisVoice[]>([]);
@@ -3207,7 +3206,7 @@ function ChatPanel({
     async function loadInitialAnswer() {
       setIsThinking(true);
       setBackendStatus("checking");
-      setBackendLabel("Checking selected Gemini model");
+      setBackendLabel("Checking selected AI model");
 
       const result = await getAgentAnswerFromBackend({
         agentId: agent.id,
@@ -3266,7 +3265,7 @@ function ChatPanel({
       ...previousMessages,
       {
         sender: "agent",
-        text: `Switched to ${nextAgent.name} Agent. Re-answering the current audit question with this persona...`,
+        text: `Switched to ${nextAgent.name} EY Agent. Re-answering the current audit question with this persona...`,
       },
       {
         sender: "agent",
@@ -3276,7 +3275,7 @@ function ChatPanel({
 
     setIsThinking(true);
     setBackendStatus("checking");
-    setBackendLabel("Checking selected Gemini model");
+    setBackendLabel("Checking selected AI model");
 
     const result = await getAgentAnswerFromBackend({
   agentId: nextAgent.id,
@@ -3294,7 +3293,7 @@ function ChatPanel({
       ...messages,
       {
         sender: "agent" as const,
-        text: `Switched to ${nextAgent.name} Agent. Re-answering the current audit question with this persona...`,
+        text: `Switched to ${nextAgent.name} EY Agent. Re-answering the current audit question with this persona...`,
       },
       {
         sender: "agent" as const,
@@ -3332,13 +3331,13 @@ function ChatPanel({
       ...conversationHistory,
       {
         sender: "agent",
-        text: "Checking the selected Gemini model and reusing the focused audit evidence...",
+        text: "Checking the selected AI model and reusing the focused audit evidence...",
       },
     ]);
 
     setIsThinking(true);
     setBackendStatus("checking");
-    setBackendLabel("Checking selected Gemini model");
+    setBackendLabel("Checking selected AI model");
 
     const result = await getAgentAnswerFromBackend({
       agentId: agent.id,
@@ -3398,13 +3397,13 @@ function ChatPanel({
       ...conversationHistory,
       {
         sender: "agent",
-        text: "Reviewing the uploaded audit context and recent chat history with the selected Gemini model. This may take a few seconds...",
+        text: "Reviewing the uploaded audit context and recent chat history with the selected AI model. This may take a few seconds...",
       },
     ]);
 
     setIsThinking(true);
     setBackendStatus("checking");
-    setBackendLabel("Checking selected Gemini model");
+    setBackendLabel("Checking selected AI model");
 
     const result = await getAgentAnswerFromBackend({
       agentId: agent.id,
@@ -3449,7 +3448,7 @@ function ChatPanel({
     <aside className="chat-panel">
       <div className={`chat-header ${agent.id}`}>
         <div>
-          <h3>{agent.name} Agent</h3>
+          <h3>{agent.name} EY Agent</h3>
           <p>{context.topic}</p>
         </div>
 
@@ -3491,8 +3490,8 @@ function ChatPanel({
 
         <small>
           {selectedAgent
-            ? `${selectedAgent.name} is active for this session.`
-            : "No session agent was selected before opening chat."}
+            ? `${selectedAgent.name} is active for this review.`
+            : "No agent was selected before opening chat."}
         </small>
       </div>
 
@@ -3502,7 +3501,7 @@ function ChatPanel({
         <div>
           <strong>
             {backendStatus === "connected"
-              ? "Gemini Connected"
+              ? "AI Connected"
               : backendStatus === "fallback"
                 ? "Fallback Mode Active"
                 : "Checking Model"}
@@ -3521,7 +3520,7 @@ function ChatPanel({
               {voiceMuted
                 ? "Read-aloud is muted for intro and chat"
                 : selectedAgentSpeechVoice
-                  ? `${agentVoiceProfile.label} · ${isGoogleBrowserVoice(selectedAgentSpeechVoice) ? "Google browser voice" : "browser fallback"}: ${selectedAgentSpeechVoice.name}`
+                  ? `${agentVoiceProfile.label} · ${isGoogleBrowserVoice(selectedAgentSpeechVoice) ? "browser voice" : "browser fallback"}: ${selectedAgentSpeechVoice.name}`
                   : `${agentVoiceProfile.label} · default browser voice`}
             </small>
           </div>
@@ -3666,7 +3665,7 @@ function MarkdownMessage({ text }: { text: string }) {
   );
 }
 
-function buildAuralytixDemoBrief(
+function buildAuralytixReviewBrief(
   analysis: AuditAnalysis,
   extractionRunSummary: ExtractionRunSummary,
 ): string {
@@ -3690,13 +3689,13 @@ function buildAuralytixDemoBrief(
     .join("\n");
 
   return [
-    "AURALYTIX DEMO BRIEF",
+    "AURALYTIX REVIEW BRIEF",
     "====================",
     `Generated: ${new Date().toLocaleString()}`,
     `Company: ${analysis.companyName}`,
     "",
-    "1. Demo opening",
-    "Auralytix is an AI-powered audit analytics assistant. The current build supports agent selection, audit ZIP upload, evidence-backed dashboard KPIs, document-grounded KPI chat, smart follow-up chips, voice input, read-aloud, and global mute controls.",
+    "1. Workflow overview",
+    "Auralytix is an AI-powered audit analytics assistant supporting agent selection, audit ZIP upload, evidence-backed dashboard KPIs, document-grounded KPI chat, smart follow-up chips, voice input, read-aloud, and global mute controls.",
     "",
     "2. Extraction summary",
     `Engine: ${extractionRunSummary.label}`,
@@ -3716,13 +3715,13 @@ function buildAuralytixDemoBrief(
     `Financial flags: ${analysis.financialDiscrepancyFlags}`,
     `Vendor risk rating: ${analysis.vendorRiskRating}`,
     "",
-    "4. Recommended demo order",
-    "1. Show Agents page and Auralytix intro/mute.",
-    "2. Upload the synthetic Northstar audit ZIP.",
+    "4. Recommended review path",
+    "1. Show the Agents page and Auralytix intro/mute controls.",
+    "2. Upload the sample Northstar audit ZIP.",
     "3. Open Dashboard and explain evidence coverage.",
     "4. Click Pending Actions first because it uses deterministic remediation tracker logic.",
     "5. Click a smart follow-up chip such as Status split? or Closure proof?",
-    "6. Use Read Latest, Stop Voice, and Mute to demonstrate voice controls.",
+    "6. Use Read Latest, Stop Voice, and Mute to review voice controls.",
     "7. Open High Risk Items or Compliance Score if extra validation is requested.",
     "",
     "5. Source files",
@@ -3734,9 +3733,9 @@ function buildAuralytixDemoBrief(
     "7. Generated recommendations",
     recommendationLines || "No recommendations available.",
     "",
-    "8. Known limitations",
-    "- Google Cloud TTS requires valid service-account credentials; browser TTS remains the fallback.",
-    "- OCR works for image-only/scanned text, but scanned table cell reconstruction is still prototype-level.",
+    "8. Operational notes",
+    "- Cloud TTS requires valid service-account credentials; browser TTS remains available when cloud credentials are not configured.",
+    "- OCR works for image-only/scanned text; scanned table cell reconstruction depends on source document quality.",
     "- Dashboard KPI values should be treated as computed claims and reconciled against uploaded evidence.",
   ].join("\n");
 }
@@ -3992,14 +3991,14 @@ async function getAgentAnswerFromBackend({
     console.error("Agent backend failed:", error);
 
     return {
-      answer: `I could not reach the local Ollama backend, so I am using the built-in fallback response for demo safety.
+      answer: `I could not reach the local Ollama backend, so I am using the built-in fallback response for review continuity.
 
 ${generateAgentResponse(agentId, context, question, analysis)}
 
 Backend checklist:
 1. Confirm Ollama is running.
 2. Confirm the FastAPI backend is running on http://localhost:8000.
-3. Test with: Invoke-RestMethod http://localhost:8000/api/health`,
+3. Validate with: Invoke-RestMethod http://localhost:8000/api/health`,
       usedFallback: true,
       providerLabel: "Using built-in fallback because backend is unavailable",
     };
@@ -4470,7 +4469,7 @@ Breadcrumbs from the files: ${answerData.evidence}`;
 
 Risk logic: ${answerData.impact}
 
-Recommended test: ${answerData.action}
+Recommended validation: ${answerData.action}
 
 Supporting evidence: ${answerData.evidence}`;
 }
@@ -4550,7 +4549,7 @@ function buildContextAwareAnswer(
     mainPoint: `The current audit package has ${analysis.totalFindings} findings: ${analysis.highRiskItems} high-risk, ${analysis.mediumRiskItems} medium-risk, and ${analysis.lowRiskItems} low-risk.`,
     impact: `The strongest theme is ${summarizeDominantThemesFromAnalysis(analysis)}, with a compliance score of ${analysis.complianceScore}% and ${analysis.vendorRiskRating} vendor risk.`,
     action:
-      "For the demo, start with the high-risk findings, then show the source files and one recommendation that turns the finding into a remediation action.",
+      "Start with the high-risk findings, then review the source files and one recommendation that turns the finding into a remediation action.",
     evidence: evidenceText,
   };
 }

@@ -3663,7 +3663,7 @@ main {
 }
 
 /* Final demo hardening polish */
-.demo-brief-btn {
+.review-brief-btn {
   min-height: 44px;
   border-color: rgba(96, 165, 250, 0.28);
   background: rgba(96, 165, 250, 0.1);
@@ -4800,4 +4800,321 @@ button.dashboard-visual-card {
 
 .model-switcher-card small {
   color: #c8c8cf !important;
+}
+
+/* EY submission chat and assistant polish */
+.floating-chat {
+  right: 30px !important;
+  bottom: 30px !important;
+  min-height: 56px !important;
+  padding: 15px 20px !important;
+  border: 1px solid rgba(255, 230, 0, 0.54) !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(135deg, #ffe600, #f7c600) !important;
+  color: #111111 !important;
+  box-shadow:
+    0 22px 60px rgba(255, 230, 0, 0.18),
+    0 20px 48px rgba(0, 0, 0, 0.38) !important;
+  letter-spacing: -0.01em;
+}
+
+.floating-chat:hover {
+  transform: translateY(-3px) !important;
+  box-shadow:
+    0 28px 70px rgba(255, 230, 0, 0.24),
+    0 20px 48px rgba(0, 0, 0, 0.42) !important;
+}
+
+.chat-panel {
+  width: min(470px, 100vw) !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 230, 0, 0.105), transparent 34%),
+    linear-gradient(180deg, #0a0a0a, #050505) !important;
+  border-left: 1px solid rgba(255, 230, 0, 0.35) !important;
+  box-shadow:
+    -34px 0 90px rgba(0, 0, 0, 0.58),
+    inset 1px 0 0 rgba(255, 230, 0, 0.08) !important;
+}
+
+.chat-header,
+.chat-header.professional,
+.chat-header.friendly,
+.chat-header.creative,
+.chat-header.analytical {
+  position: relative;
+  padding: 24px !important;
+  background:
+    radial-gradient(circle at 92% 0%, rgba(255, 230, 0, 0.18), transparent 38%),
+    linear-gradient(135deg, rgba(255, 230, 0, 0.095), rgba(255, 255, 255, 0.018)),
+    #111111 !important;
+  border-bottom: 1px solid rgba(255, 230, 0, 0.24) !important;
+}
+
+.chat-header::after {
+  content: "EY audit assistant";
+  position: absolute;
+  left: 24px;
+  bottom: -13px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 230, 0, 0.32);
+  border-radius: 999px;
+  background: #050505;
+  color: var(--ey-yellow);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.chat-header h3 {
+  color: #ffffff !important;
+  font-size: 23px !important;
+  letter-spacing: -0.04em;
+}
+
+.chat-header p {
+  max-width: 330px;
+  color: #c8c8cf !important;
+}
+
+.chat-header button {
+  width: 38px !important;
+  height: 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(255, 230, 0, 0.24) !important;
+  border-radius: 14px !important;
+  background: rgba(255, 230, 0, 0.08) !important;
+  color: var(--ey-yellow) !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.chat-header button:hover {
+  background: var(--ey-yellow) !important;
+  color: #111111 !important;
+}
+
+.chat-agent-controls {
+  padding: 24px 18px 15px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 230, 0, 0.045), transparent),
+    rgba(17, 17, 17, 0.88) !important;
+  border-bottom: 1px solid rgba(255, 230, 0, 0.14) !important;
+}
+
+.chat-agent-controls label {
+  color: #a9a9b2 !important;
+}
+
+.chat-agent-controls small {
+  color: #c8c8cf !important;
+}
+
+.llm-status-card {
+  margin: 12px 14px !important;
+  border-color: rgba(255, 230, 0, 0.18) !important;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)),
+    #101010 !important;
+}
+
+.llm-status-card.connected .llm-dot {
+  background: var(--ey-yellow) !important;
+  box-shadow: 0 0 0 4px rgba(255, 230, 0, 0.16) !important;
+}
+
+.llm-status-card.checking .llm-dot {
+  background: #f7c600 !important;
+  box-shadow: 0 0 0 4px rgba(247, 198, 0, 0.14) !important;
+}
+
+.llm-status-card.fallback .llm-dot {
+  background: #f97316 !important;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.14) !important;
+}
+
+.llm-status-card strong {
+  color: #ffffff !important;
+}
+
+.voice-strip.voice-strip-enhanced,
+.voice-strip {
+  padding: 12px 14px !important;
+  background: #0d0d0d !important;
+  border-bottom: 1px solid rgba(255, 230, 0, 0.14) !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-status,
+.voice-strip .voice-status,
+.voice-strip span {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid rgba(255, 230, 0, 0.14) !important;
+  color: #efeff3 !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-status.active {
+  background: rgba(255, 230, 0, 0.09) !important;
+  border-color: rgba(255, 230, 0, 0.38) !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-status svg,
+.voice-strip .voice-status svg {
+  color: var(--ey-yellow) !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-action,
+.voice-strip .voice-action,
+.message-voice-actions button {
+  background: rgba(255, 230, 0, 0.08) !important;
+  border: 1px solid rgba(255, 230, 0, 0.22) !important;
+  color: var(--ey-yellow) !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-action:hover:not(:disabled),
+.message-voice-actions button:hover:not(:disabled) {
+  background: var(--ey-yellow) !important;
+  color: #111111 !important;
+}
+
+.voice-strip.voice-strip-enhanced .voice-speed-control,
+.voice-speed-control select {
+  border-color: rgba(255, 230, 0, 0.18) !important;
+  background: #101010 !important;
+  color: #ffffff !important;
+}
+
+.kpi-followup-panel {
+  margin: 12px 14px !important;
+  padding: 13px !important;
+  border: 1px solid rgba(255, 230, 0, 0.2) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 230, 0, 0.09), transparent 38%),
+    #101010 !important;
+}
+
+.kpi-followup-header span {
+  color: #ffffff !important;
+}
+
+.kpi-followup-header small {
+  color: var(--ey-yellow) !important;
+}
+
+.kpi-followup-chips button {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border: 1px solid rgba(255, 230, 0, 0.16) !important;
+  color: #f5f5f5 !important;
+}
+
+.kpi-followup-chips button:hover:not(:disabled) {
+  background: var(--ey-yellow) !important;
+  border-color: var(--ey-yellow) !important;
+  color: #111111 !important;
+}
+
+.chat-messages {
+  padding: 20px 18px !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.012), transparent),
+    #070707 !important;
+}
+
+.message {
+  border-radius: 18px !important;
+}
+
+.message.agent {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018)),
+    #151515 !important;
+  border: 1px solid rgba(255, 230, 0, 0.14) !important;
+  color: #e8e8ed !important;
+}
+
+.message.user {
+  background: linear-gradient(135deg, #ffe600, #f7c600) !important;
+  color: #111111 !important;
+  font-weight: 800;
+  box-shadow: 0 14px 34px rgba(255, 230, 0, 0.14) !important;
+}
+
+.message.agent h1,
+.message.agent h2,
+.message.agent h3,
+.message.agent strong {
+  color: #ffffff !important;
+}
+
+.message.agent th {
+  background: rgba(255, 230, 0, 0.09) !important;
+  color: #ffffff !important;
+}
+
+.message.agent th,
+.message.agent td {
+  border-color: rgba(255, 230, 0, 0.18) !important;
+}
+
+.message-focus-pulse {
+  outline: 2px solid rgba(255, 230, 0, 0.86) !important;
+  box-shadow:
+    0 0 0 5px rgba(255, 230, 0, 0.12),
+    0 18px 42px rgba(255, 230, 0, 0.12) !important;
+}
+
+.chat-input {
+  background: #0a0a0a !important;
+  border-top: 1px solid rgba(255, 230, 0, 0.18) !important;
+}
+
+.chat-input input {
+  border-color: rgba(255, 230, 0, 0.18) !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+.chat-input input:focus {
+  border-color: rgba(255, 230, 0, 0.74) !important;
+  box-shadow: 0 0 0 3px rgba(255, 230, 0, 0.12) !important;
+}
+
+.chat-input button,
+.chat-input .mic-button {
+  background: var(--ey-yellow) !important;
+  color: #111111 !important;
+  border: 1px solid var(--ey-yellow) !important;
+  box-shadow: 0 12px 26px rgba(255, 230, 0, 0.12) !important;
+}
+
+.chat-input .mic-button {
+  background: rgba(255, 230, 0, 0.1) !important;
+  color: var(--ey-yellow) !important;
+}
+
+.chat-input .mic-button.listening {
+  background: #f97316 !important;
+  color: #111111 !important;
+  border-color: #f97316 !important;
+}
+
+.chat-input button:disabled,
+.voice-action:disabled,
+.message-voice-actions button:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+@media (max-width: 760px) {
+  .floating-chat {
+    right: 18px !important;
+    bottom: 18px !important;
+  }
+
+  .chat-panel {
+    width: 100% !important;
+  }
 }
